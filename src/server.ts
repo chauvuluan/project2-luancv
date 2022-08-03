@@ -33,10 +33,19 @@ import {filterImageFromURL,deleteLocalFiles} from './util/util';
   // Root Endpoint
   // Displays a simple message to the user
 // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
-  app.get( "/filteredimage?:image_url", async ( req: Request , res: Response ) => {
-    const path  = await filterImageFromURL(req.query.image_url);
+  app.get( "/filteredimage", async ( req: Request , res: Response ) => {
+    console.log("123456789")
+    const imageUrl = req.query.image_url;
+    if (imageUrl === "" || imageUrl === undefined){
+      res.status(400).json({
+        "message": "Image url is required"
+      })
+    }
+    const path  = await filterImageFromURL(imageUrl);
+    console.log(path)
+    
     await res.sendFile(path)
-   res.on("finish", () =>  deleteLocalFiles([path]))
+    res.on("finish", () =>  deleteLocalFiles([path]))
   
   } );
   //! END @TODO1
