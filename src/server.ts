@@ -34,7 +34,6 @@ import {filterImageFromURL,deleteLocalFiles} from './util/util';
   // Displays a simple message to the user
 // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   app.get( "/filteredimage", async ( req: Request , res: Response ) => {
-    console.log("123456789")
     const imageUrl = req.query.image_url;
     if (imageUrl === "" || imageUrl === undefined){
       res.status(400).json({
@@ -42,8 +41,6 @@ import {filterImageFromURL,deleteLocalFiles} from './util/util';
       })
     }
     const path  = await filterImageFromURL(imageUrl);
-    console.log(path)
-    
     await res.sendFile(path)
     res.on("finish", () =>  deleteLocalFiles([path]))
   
