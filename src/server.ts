@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL,deleteLocalFiles} from './util/util';
 (async () => {
@@ -33,7 +33,7 @@ import {filterImageFromURL,deleteLocalFiles} from './util/util';
   // Root Endpoint
   // Displays a simple message to the user
 // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
-  app.get( "/filteredimage?:image_url", async ( req, res ) => {
+  app.get( "/filteredimage?:image_url", async ( req: Request , res: Response ) => {
     const path  = await filterImageFromURL(req.query.image_url);
     await res.sendFile(path)
    res.on("finish", () =>  deleteLocalFiles([path]))
